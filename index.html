@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script src="https://unpkg.com/axios@1.6.7/dist/axios.min.js"></script>
+    <script src="./pizza.js"></script>
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+
+<body x-data="pizzaCart">
+    <div class="container">
+        <h1 x-text="title"></h1>
+        <div class="Cart" x-cloak>
+            <div>
+                <div>
+                    username: <input type="text" x-model="username">
+                    <button x-on:click="Login" x-show="!cartId">Login</button>
+                    <button x-on:click="logout" x-show="username && cartId">Logout</button>
+                    <!--<a href="">Logout</a>-->
+                </div>
+                <div x-show="cartId">
+                    Cart code: <span x-text="cartId"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div>
+        <div class="Your-cart" x-show="cartTotal > 0">
+            <h2>Your Cart</h2>
+            <div class="message" x-text="message">message here</div>
+            <table>
+                <tr>
+                    <th>Flavour</th>
+                    <th>Size</th>
+                    <th>Price</th>
+                    <th>Qty</th>
+                    <th>Total</th>
+                </tr>
+        </div>
+        <template x-for="pizza in cartPizzas">
+            <tr>
+                <td x-text="pizza.flavour"></td>
+                <td x-text="pizza.size"></td>
+                <td x-text="pizza.price"></td>
+                <td>
+                    <button x-on:Click="addPizzaToCart(pizza.id)">+</button>
+                    x<span x-text="pizza.qty"></span>
+                    <button x-on:Click="removePizzaFromCart(pizza.id)">-</button>
+                </td>
+                <td x-text="pizza.total"></td>
+            </tr>
+        </template>
+        <!--
+        <tr>
+            <td>Flavour 3</td>
+            <td>small</td>
+            <td>57.88</td>
+            <td> -->
+        <!-- <button>+</button>
+                x<span>3</span>
+                <button>-</button>
+            </td>
+        </tr>
+        <tr> -->
+        <!-- <td>Flavour 1</td>
+            <td>small</td>
+            <td>57.88</td> -->
+        <!-- <td>
+                <button>+</button>
+                x<span>3</span>
+                <button>-</button>
+            </td> -->
+        </tr>
+        <tr class="Total">
+            <td colspan="4">Total</td>
+            <td colspan="2">R <span x-text="cartTotal"></span></td>
+        </tr>
+        <tr class="Pay-now">
+            <td colspan="4">Pay Now</td>
+            <td>
+                <input x-model="paymentAmount" type="text">
+                <button x-on:click="payForCart()">Pay</button>
+            </td>
+        </tr>
+        </table>
+    </div>
+    <h2>Featured Pizzas</h2>
+    <div class="featured-pizzas" x-show="username && cartId">
+        <template x-for="pizza in featuredPizzas">
+            <div class="pizza-item" x-show="username && cartId">
+                <img src="pizza2.jfif" width="200">
+                <h3 x-text="pizza.flavour"></h3>
+                <h4>R <span x-text="pizza.price"></span></h4>
+                <p x-text="pizza.size"></p>
+                <button class="btn" @click="addPizza(pizza.id)">Buy</button>
+            </div>
+        </template>  
+</div>
+    <div class="pizza" x-show="username && cartId">
+        <h2>Pizza</h2>
+        <template x-for="pizza in pizzas">
+            <div class="pizza">
+                <h5 x-text="pizza.flavour"></h5>
+                <div class="image">
+                <img src="pizza.npg.jfif" width="150">
+                </div>
+                <!-- <span x-text="pizza.id"></span> -->
+                <div class="size">
+                <span x-text="pizza.size"></span>
+                </div>
+                <div class="price">
+                <strong>R<span x-text="pizza.price"></span></strong>
+                </div>
+                <div class="add-to-cart">
+                    <button class="btn" @click="addPizzaToCart(pizza.id)">Add to cart</button>
+                    <!-- <button class="btn" @click="setFeaturedPizza(pizza.id)">Buy</button> -->
+
+                </div>
+            </div>
+    </div>
+    </div>
+    </template>
+    </div>
+    <style>
+        /* General table styles */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+/* Header and data cell styles */
+th, td {
+    border: 1px solid #ffffff;
+    padding: 8px;
+    text-align: left;
+}
+
+/* Header background color */
+th {
+    background-color: aliceblue;
+}
+
+tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+tr:nth-child(odd) {
+    background-color: burlywood; 
+}
+
+h1, h2 {
+    color: chocolate;
+}
+
+@media (max-width: 768px) {
+    table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+
+    th, td {
+        padding: 12px 5px;
+    }
+
+    h1, h2 {
+        font-size: 1.2em; 
+    }
+}
+
+@media (max-width: 480px) {
+    table {
+        font-size: 14px; 
+    }
+
+    th, td {
+        padding: 10px 3px; 
+    }
+
+    h1, h2 {
+        font-size: 1em; 
+    }
+}
+
+    </style>
+    <div x-data="pizzaCartHistory()">
+        <h1>Pizza Cart History</h1>
+        <button @click="saveHistory">Load History</button>
+        <h2>History</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Username</th>
+                    <th>Status</th>
+                    <th>Cart Code</th>
+                    <th>Pizza Type</th>
+                    <th>Size</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                <template x-for="cart in history" :key="cart.cart_code">
+                    <template x-for="pizza in cart.pizzas" :key="pizza.id">
+                        <tr>
+                            <td x-text="cart.username"></td>
+                            <td x-text="cart.status"></td>
+                            <td x-text="cart.cart_code"></td>
+                            <td x-text="pizza.type"></td>
+                            <td x-text="pizza.size"></td>
+                            <td x-text="pizza.qty"></td>
+                            <td x-text="pizza.price.toFixed(2)"></td>
+                            <td x-text="(pizza.price * pizza.qty).toFixed(2)"></td>
+                        </tr>
+                    </template>
+                </template>
+            </tbody>
+        </table>
+    </div>
+    
+    <script>
+        function pizzaCartHistory() {
+            return {
+                history: [],
+                saveHistory() {
+                    const username = prompt("Please enter your username");
+                    if (!username) {
+                        alert("Username cannot be empty");
+                        return;
+                    }
+    
+                    axios
+                        .get(`https://pizza-api.projectcodex.net/api/pizza-cart/username/${username}`)
+                        .then((res) => {
+                            const carts = res.data;
+                            carts.forEach((cart) => {
+                                if (cart.status === "paid") {
+                                    const cartCode = cart.cart_code;
+                                    axios
+                                        .get(`https://pizza-api.projectcodex.net/api/pizza-cart/${cartCode}/get`)
+                                        .then((res) => {
+                                            const cartData = res.data;
+                                            this.history.push(cartData);
+                                            this.hasPaidHistory = true;
+                                        });
+                                }
+                            });
+                            if (!foundPaidHistory) {
+                            this.hasPaidHistory = false; 
+                        }
+                        })
+                }
+            }
+        }
+    </script>
+    
+</body>
+
+</html>

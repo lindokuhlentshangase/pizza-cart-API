@@ -1,0 +1,190 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: antiquewhite;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: aliceblue;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+}
+
+h1, h2, h5 {
+    text-align: center;
+    color: #333;
+    margin-top: 0;
+}
+
+.Cart {
+    margin-top: 20px;
+}
+
+input[type="text"], input[type="number"], button {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+    width: 100%;
+    box-sizing: border-box;
+    margin-bottom: 10px;
+}
+
+button {
+    background-color: #007bff;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+.Your-cart {
+    margin-top: 20px;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.message {
+    background-color: azure;
+    color: #333;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+table th, table td {
+    padding: 8px;
+    border: 1px solid #ccc;
+    text-align: left;
+}
+
+.Total {
+    font-weight: bold;
+    text-align: right;
+    margin-top: 10px;
+}
+
+.Pay-now {
+    margin-top: 20px;
+    text-align: right;
+}
+
+.Pay-now input[type="text"] {
+    width: calc(100% - 100px);
+    margin-right: 10px;
+}
+
+.Pay-now button {
+    background-color: #28a745;
+    color: #fff;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.Pay-now button:hover {
+    background-color: #218838;
+}
+
+.featured-pizzas {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    margin-top: 20px;
+}
+
+.pizza-item {
+    width: calc(33.33% - 20px);
+    margin-bottom: 20px;
+    background-color: #f8f9fa;
+    padding: 10px;
+    border-radius: 4px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.pizza-item:hover {
+    transform: translateY(-5px);
+}
+
+.add-to-cart {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.size {
+    text-align: center;
+    font-size: large;
+    margin-bottom: 10px;
+}
+
+.image {
+    width: 100%;
+    text-align: center;
+}
+
+[x-cloak] { 
+    display: none !important; 
+}
+
+/* Responsive Styles */
+
+@media (max-width: 960px) {
+    .pizza-item {
+        width: calc(50% - 20px);
+    }
+
+    .Pay-now input[type="text"] {
+        width: calc(100% - 110px);
+    }
+}
+
+@media (max-width: 600px) {
+    .pizza-item {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+
+    .Pay-now input[type="text"] {
+        width: calc(100% - 110px);
+        margin-right: 5px;
+    }
+
+    .container {
+        padding: 10px;
+    }
+
+    .message {
+        font-size: 12px;
+    }
+
+    table th, table td {
+        font-size: 12px;
+        padding: 6px;
+    }
+
+    .Total {
+        font-size: 12px;
+    }
+
+    .Pay-now button {
+        font-size: 12px;
+    }
+}
